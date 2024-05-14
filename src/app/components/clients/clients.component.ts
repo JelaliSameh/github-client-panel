@@ -13,21 +13,27 @@ import { AuthClientService } from 'src/app/services/auth-client.service';
 })
 export class ClientsComponent implements OnInit {
   clients!:Client[];
+  searchClients!: Client[];
   total: number =0 ;
+query: any;
   constructor(private clientService: ClientService,
               private router:Router,
               private authClientService:AuthClientService,
               private swal: SweetAlert2LoaderService ){}
-    ngOnInit() {/*
+    ngOnInit() {
                 this.authClientService.getAuth().subscribe((auth) => {
                   if (auth) { // Assurez-vous que auth est défini avant d'accéder à uid
                     this.clientService.getClients(auth.uid).subscribe((clients) => {
-                      this.clients = clients;
+                     this.searchClients = this.clients = clients;
                       this.total = this.getTotal();
                     });
                   }
-                });*/
+                });
               }
+  search(query: string){
+    this.searchClients =(query) ? this.clients.filter(client => client.firstName?.toLocaleLowerCase().includes(query.toLowerCase()) || client.lastName?.toLocaleLowerCase().includes(query.toLocaleLowerCase())) :this.clients;
+
+  }
             
   getTotal(){
     return this.clients.reduce((total, client) => { 

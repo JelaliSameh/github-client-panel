@@ -1,23 +1,24 @@
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { CanActivateFn, Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { inject } from '@angular/core';
+import { map } from 'rxjs/operators';
 
-@Injectable()
-export class AuthGuard {
-  constructor(private afAuth: AngularFireAuth, private router: Router) {}
-
-  canActivate(): Observable <boolean> {
-    // Utilisez this.afAuth au lieu de créer une nouvelle instance
-    return this.afAuth.authState.pipe(
-      map(auth => {
-        if (!auth) {
-          this.router.navigate(['/login']);
-          return false;
-        } else {
-          return true;
-        }
-      })
-    );
-  }
-}
+export const authGuard: CanActivateFn = (route, state) => 
+{
+  const afAuth = inject(AngularFireAuth);
+  const router = inject(Router);
+  
+  
+  return afAuth.authState.pipe(
+    map((auth: any) => {
+      if (!auth) {
+        // Rediriger vers la page de connexion
+        // Utilisez state.url pour rediriger vers la page demandée après la connexion
+        router.navigate(['/login']);
+        return false;
+      } else {
+        return true;
+      }
+    })
+  );
+};

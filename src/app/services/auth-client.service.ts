@@ -38,7 +38,7 @@ loginWithGoogle() {
 }
 
 getAuth() {
-  return this.afAuth.authState.pipe(map(auth =>auth)) ;
+  return this.afAuth.authState.pipe(map(auth => auth)) ;
 }
 
 logOut(){
