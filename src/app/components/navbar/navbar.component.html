@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <a class="navbar-brand" routerLink ="/">navbar </a>
+    <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#collapsibleNav"
+    aria-expanded="false" aria-label="Toggler navigation"></button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active" *ngIf="isLoggedIn">
+                <a class="nav-link" routerLink="/">Dashboard<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item" *ngIf="!isLoggedIn">
+                <a routerLink= "/register" class="nav-link">Register</a>
+            </li>
+            <li class="nav-item" *ngIf="!isLoggedIn">
+                <a routerLink= "/login" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="isLoggedIn && userLoggedIn">
+                <a routerLink= "/login" class="nav-link">{{ userLoggedIn }}</a>
+            <li class="nav-item" *ngIf="isLoggedIn">
+                <a  (click)="onLogOut()" class="nav-link">LogOut</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
